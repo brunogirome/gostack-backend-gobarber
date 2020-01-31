@@ -65,3 +65,5 @@ Para "bindar" o nodemon ao `sucrase`, é necessário criar um arquivo chamado `n
 ---
 
 ## PENDENTE ADICIONAR DESCRIÇÕES DA ALTERAÇÃO DE CONFIGURAÇÃO DO .editorconfig, .eslint e do .prettierrc
+
+## PENDENTE TAMBÉM ADICIONAR DESCRIÇÕES DO VÍDEO DE CONFIGURAÇÕES DO SEQUELIZE
