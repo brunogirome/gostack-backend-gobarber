@@ -44,7 +44,7 @@ yarn add sucrase -D
 > **Nota:** A flag `-D` indica que essa será uma dependecia de desenvolvimento, e não será utilizada no ambiente de produção.
 > **Outra Nota:** Ao se instalar o `sucrase`, não é mais possível executar o comando `node server.js`, pois ele não irá reconhecer a síntaxe nova. Esse comando é substituído por `yarn sucrase-node server.js`.
 
-### 2:22 de vídeo aproximadamente, ver como é feito a configração de DEBUG e anotar!
+### 2:22 de vídeo aproximadamente, ver como é feito a configração de DEBUG e anotar
 
 ---
 
