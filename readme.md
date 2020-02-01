@@ -2,9 +2,9 @@
 
 ## Quick Notes
 
-- É interessante trabalhar com classes dentro do app.
+- É interessante trabalhar com classes dentro do backend.
 
-- A vantagem de utilizar classes é que futuramente facilita a realização de testes.
+- Ao se utilizar classes, fica bem mais fácil e viável criar testes para a aplicação.
 
 - Lembrando que no `JavaScript`, quando se declara alguma variável com _this_ dentro do constructor (se eu não me engano é só no constructor), o `JavaScript` automaticamente reconhece aquela variável como uma variável pública da classe, exemplo:
 
@@ -22,14 +22,15 @@ class App {
 
 ## App
 
-Local onde fica as configurações da aplicação.
-É interessante no server, fazer todas aquelas configurações básicas do express, e então, exportar uma nova instância do App, porém, apenas do atributo server:
+O App acaba sendo a estrutura da aplicação backend.
+Neste caso, o App foi programado como classe, e todas as configurações do `express` ficaram aqui dentro (ao invés de jogar todo no arquivo `server.js`, como era feito antes, todos middlewares e rotas ficam organizadas em métodos próprios).
+No App, jogamos todas as configurações do `express` dentro de uma variável `server`, e então a exportamos:
 
 ```javascript
 module.exports = new App().server;
 ```
 
-> `JavaScript` é magico! 🎩 ✨
+> Ou seja, instânciamos a própria classe no arquivo e tornamos apenas uma variável pública. `JavaScript` é magico! 🎩 ✨
 
 ---
 
@@ -44,11 +45,9 @@ yarn add sucrase -D
 > **Nota:** A flag `-D` indica que essa será uma dependecia de desenvolvimento, e não será utilizada no ambiente de produção.
 > **Outra Nota:** Ao se instalar o `sucrase`, não é mais possível executar o comando `node server.js`, pois ele não irá reconhecer a síntaxe nova. Esse comando é substituído por `yarn sucrase-node server.js`.
 
-### 2:22 de vídeo aproximadamente, ver como é feito a configração de DEBUG e anotar
-
 ---
 
-## Nodemon
+## Nodemon & Surcrase
 
 Para "bindar" o nodemon ao `sucrase`, é necessário criar um arquivo chamado `nodemon.json` na raiz, e passar as seguintes configurações:
 
@@ -60,7 +59,36 @@ Para "bindar" o nodemon ao `sucrase`, é necessário criar um arquivo chamado `n
 }
 ```
 
-> **Nota:** 3:20 de vídeo left. FAZER ESSA ANOTAÇÃO!
+Esse processo é necessário para evitar que o `nodemon` rode o comando `node server.js` toda vez que a aplicação for reiniciada.
+
+---
+
+## Debugging NodeJS com o VSCode
+
+É interessante incluir um script exclusivo para debugs que rode com `nodemon`, para isso, dentro da tag `"scripts"` do `package.json`, é interessante incluir a seguinte linha:
+
+```json
+"scripts": {
+  "dev:debug": "nodemon --inspect server.js"
+}
+```
+
+### Configurações do VSCode
+
+É necesário criar um novo arquivo de configurações para debugs do VSCode, para isso, basta entrar na aba de **Debug** e clicar na opção de **criar um arquivo launch.json**.
+
+> Detalhe que o VSCode irá criar uma pasta `.vscode` na raiz do projeto, e lá ficará o `launch.json`.
+
+Ao criar o arquivo, é importante ajustar algumas coisas:
+
+```json
+{
+  "request": "attach",
+  "protocol": "inspector"
+}
+```
+
+> Com essa configurações, a ferramenta de Deubg irá ler a aplicação e não executá-la. Lembrando que a tag `"program"` pode ser removida, e a `"protocol"` geralmente não vem por padrão.
 
 ---
 
