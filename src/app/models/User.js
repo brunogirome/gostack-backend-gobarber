@@ -31,6 +31,10 @@ class User extends Model {
     // Não sei porque utilizar o return this aqui...
     return this;
   }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
+  }
 }
 
 export default User;

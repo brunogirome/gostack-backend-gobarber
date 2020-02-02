@@ -107,3 +107,5 @@ Quando se cria o model, não é necessário incluir colunas como *primary key*, 
 ## PENDENTE ANOTAR SOBRE O BYCRYTPT
 
 ## PENDENTE FALAR SOBRE O PASSWORD, VIRUTAL, E ATRIBUTOS DO MODEL, MODULO 2 3:50 DE VÍDEO, GERANDO HASH DE SENHA
+
+## PENDENTE JWT
