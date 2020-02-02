@@ -95,3 +95,15 @@ Ao criar o arquivo, é importante ajustar algumas coisas:
 ## PENDENTE ADICIONAR DESCRIÇÕES DA ALTERAÇÃO DE CONFIGURAÇÃO DO .editorconfig, .eslint e do .prettierrc
 
 ## PENDENTE TAMBÉM ADICIONAR DESCRIÇÕES DO VÍDEO DE CONFIGURAÇÕES DO SEQUELIZE
+
+## Sequelize
+
+### Models
+
+Quando se cria o model, não é necessário incluir colunas como *primary key*, *foreing keys* e *created_at*/*updated_at*.
+
+### PENDENTE FALAR SOBRE CONFIGURAÇÕES DO BANCO
+
+## PENDENTE ANOTAR SOBRE O BYCRYTPT
+
+## PENDENTE FALAR SOBRE O PASSWORD, VIRUTAL, E ATRIBUTOS DO MODEL, MODULO 2 3:50 DE VÍDEO, GERANDO HASH DE SENHA
