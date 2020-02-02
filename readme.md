@@ -1,12 +1,14 @@
 # Modulo 02 GoStack Rocketseat
 
+Este é um readme temporário que estarei utilizando para fazer as anotações mais relevantes. Importante depois lembrar de separar cada readme em uma pasta mais apropriada, para evitar poluição na home da aplicação.
+
 ## Quick Notes
 
 - É interessante trabalhar com classes dentro do backend.
 
 - Ao se utilizar classes, fica bem mais fácil e viável criar testes para a aplicação.
 
-- Lembrando que no `JavaScript`, quando se declara alguma variável com _this_ dentro do constructor (se eu não me engano é só no constructor), o `JavaScript` automaticamente reconhece aquela variável como uma variável pública da classe, exemplo:
+- Lembrando que no JavaScript, quando se declara alguma variável com _this_ dentro do constructor (se eu não me engano é só no constructor), o JavaScript automaticamente reconhece aquela variável como uma variável pública da classe, exemplo:
 
 ```javascript
 class App {
@@ -30,20 +32,20 @@ No App, jogamos todas as configurações do `express` dentro de uma variável `s
 module.exports = new App().server;
 ```
 
-> Ou seja, instânciamos a própria classe no arquivo e tornamos apenas uma variável pública. `JavaScript` é magico! 🎩 ✨
+> Ou seja, instânciamos a própria classe no arquivo e tornamos apenas uma variável pública. JavaScript é magico! 🎩 ✨
 
 ---
 
 ## Lib Sucrase
 
-Lib que permite utilizar as funções mais recentes do `JavaScript`, e não ficar "preso" no "common JS", que é a síntaxe mais antiga da linguagem.
+Lib que permite utilizar as funções mais recentes do JavaScript, e não ficar "preso" no "common JS", que é a sintaxe mais antiga da linguagem.
 
 ```javascript
 yarn add sucrase -D
 ```
 
 > **Nota:** A flag `-D` indica que essa será uma dependecia de desenvolvimento, e não será utilizada no ambiente de produção.
-> **Outra Nota:** Ao se instalar o `sucrase`, não é mais possível executar o comando `node server.js`, pois ele não irá reconhecer a síntaxe nova. Esse comando é substituído por `yarn sucrase-node server.js`.
+> **Outra Nota:** Ao se instalar o `sucrase`, não é mais possível executar o comando `node server.js`, pois ele não irá reconhecer a sintaxe nova. Esse comando é substituído por `yarn sucrase-node server.js`.
 
 ---
 
@@ -109,3 +111,54 @@ Quando se cria o model, não é necessário incluir colunas como *primary key*, 
 ## PENDENTE FALAR SOBRE O PASSWORD, VIRUTAL, E ATRIBUTOS DO MODEL, MODULO 2 3:50 DE VÍDEO, GERANDO HASH DE SENHA
 
 ## PENDENTE JWT
+
+## PENDENTE AUTENTICAÇÃO
+
+## Gerando um Middleware no arquivos `routes.js`
+
+É possívem definir um middleware para diversas rotas, caso antes dessas rotas, seja defindo um `routes.use(nomeDoMiddleware)`:
+
+```javascript
+routes.post('/users', UserController.store);
+routes.post('/sessions', SessionController.store);
+
+// Setando um Middleware global para todas as rotas seguintes
+routes.use(authMiddleware);
+
+routes.put('/users', UserController.update);
+```
+
+> A pela lógica, tudo o que vir depois de `routes.use(authMiddleware);` passará pelo `authMiddleware`.
+
+## Desestruturação com arrays ignorando posições no JavaScript
+
+Na desestruturação com arrays, é possível ignorar algumas casas colocando uma vírgula dentro do array:
+
+```javascript
+const [, token] = authHeader.split(' ');
+```
+
+> `authHeader.split(' ');` é um método do JavaScript que divide uma String por um caractere passado por parâmetro. Nesse caso, foi o espaço (' ').
+
+Neste caso, foi retornado o seguinte array:
+
+```javascript
+[
+  'Bearer',
+  'hashMd5DoUsuario'
+]
+```
+
+E a desestruturação considerou apenas a variável `token`, já que foi colocado a vírgula para a primeira posição.
+
+> JavaScript é magico! 🎩 ✨
+
+## Lib promisify do NodeJS
+
+Com o promisify, é possível converter funções que usam a sintaxe antiga de `callback` do JavaScript, com a mais moderna de `async/await`:
+
+```javascript
+await promisify(jwt.verify)(token, authConfig.secret);
+```
+
+> Primeiro, o promisify pede como parâmetro a função que utiliza o callback, nesse caso, a `jwt.verify`, e já retorna a função convertida como uma função assíncrona que pode receber um `await`. Por isso, a sintaxe fica como `promisify.(callBackFunction)()`, onde o segundo parênteses é referente a função que está sendo retornada pelo promisify.
