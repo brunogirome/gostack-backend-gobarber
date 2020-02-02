@@ -162,3 +162,7 @@ await promisify(jwt.verify)(token, authConfig.secret);
 ```
 
 > Primeiro, o promisify pede como parâmetro a função que utiliza o callback, nesse caso, a `jwt.verify`, e já retorna a função convertida como uma função assíncrona que pode receber um `await`. Por isso, a sintaxe fica como `promisify.(callBackFunction)()`, onde o segundo parênteses é referente a função que está sendo retornada pelo promisify.
+
+## Validando dados de entrada com o `yup`
+
+Yup é uma lib de validação que utiliza um *Schema validation* para chegar o json que é enviado pela requisição.
