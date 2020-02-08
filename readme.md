@@ -34,6 +34,12 @@ Para passar um fuso horário via String, é necessário escrever da seguinte for
 
 Onde, o `T` representa timezone, e o `-03:00` reflete qual fuso horário eu estou passando. Neste caso, `-03:00` é o fuso horário de São Paulo, brasilia.
 
+- Uma bibliotea do Node que lida com datas é a `date-fns`, e nesta aplicação, foi utilizada uma flag `@next` para instalar a última versão:
+
+```bash
+yarn add date-fns@next
+```
+
 ---
 
 ## App

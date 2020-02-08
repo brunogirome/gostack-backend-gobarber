@@ -1,9 +1,39 @@
 import * as Yup from 'yup';
+import { startOfHour, parseISO, isBefore } from 'date-fns';
 
 import User from '../models/User';
+import File from '../models/File';
 import Appointment from '../models/Appointment';
 
 class AppointmentController {
+  async index(req, res) {
+    const appointments = await Appointment.findAll({
+      where: { user_id: req.userId, canceled_at: null },
+      order: ['date'],
+      attributes: ['id', 'date'],
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              // Importante que é necessário passar o 'path' dentro dos
+              // attributes, já que a variável 'url' é gerada com o dado do
+              // path, e como ela é Virtual, ela não é um dado fixo dentro
+              // do banco
+              attributes: ['id', 'url', 'name', 'path'],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json(appointments);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       provider_id: Yup.number().required(),
@@ -16,10 +46,33 @@ class AppointmentController {
 
     const { provider_id, date } = req.body;
 
-    // Checando se o usuário existe
+    // Checando se o provider existe
     const isProvider = await User.findOne({
       where: { id: provider_id, provider: true },
     });
+
+    // Checando se a hora é válida
+
+    // Variável que armazena a hora, onde parseISO converte a string de data
+    // em uma varíavel compatível com o Date do Javascript, e startOfHour pega
+    // apenas o valor da hora
+    const hourStart = startOfHour(parseISO(date));
+
+    // Checando se o horário não está antes do horário atual
+    if (isBefore(hourStart, new Date())) {
+      return res.status(400).json({ error: 'Past date are not permitted' });
+    }
+
+    // Checando se o provider já não possui um appointment no horário
+    const checkAvailability = await Appointment.findOne({
+      where: { provider_id, canceled_at: null, date: hourStart },
+    });
+
+    if (checkAvailability) {
+      return res
+        .status(400)
+        .json({ error: 'Appointment date already occupied' });
+    }
 
     if (!isProvider) {
       // Lembrando que Status 401: Não autorizado
@@ -36,7 +89,7 @@ class AppointmentController {
       // middelware
       user_id: req.userId,
       provider_id,
-      date,
+      date: hourStart,
     });
 
     return res.json(appointment);

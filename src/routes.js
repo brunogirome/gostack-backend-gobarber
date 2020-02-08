@@ -24,6 +24,7 @@ routes.put('/users', UserController.update);
 routes.get('/providers', ProviderController.index);
 
 routes.post('/appointments', AppointmentController.store);
+routes.get('/appointments', AppointmentController.index);
 
 // Middleware upload.single('file'): middleware que salva o arquivo de acordo
 // com as configurações passadas. O 'file' indica qual o nome do atributo
