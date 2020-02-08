@@ -7,6 +7,10 @@ import Appointment from '../models/Appointment';
 
 class AppointmentController {
   async index(req, res) {
+    // Descontruindo a query pegando o valor page, e caso esse valor não exista,
+    // é possível setar um valor default para ele, no caso, 1
+    const { page = 1 } = req.query;
+
     const appointments = await Appointment.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
@@ -16,6 +20,10 @@ class AppointmentController {
           model: User,
           as: 'provider',
           attributes: ['id', 'name'],
+          // Trazendo até 20 itens
+          limit: 20,
+          // Quantidade de itens que serão pulados
+          offset: (page - 1) * 20,
           include: [
             {
               model: File,
