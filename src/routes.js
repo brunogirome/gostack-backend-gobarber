@@ -6,6 +6,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
+import AppointmentController from './app/controllers/AppointmentController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -21,6 +22,8 @@ routes.use(authMiddleware);
 routes.put('/users', UserController.update);
 
 routes.get('/providers', ProviderController.index);
+
+routes.post('/appointments', AppointmentController.store);
 
 // Middleware upload.single('file'): middleware que salva o arquivo de acordo
 // com as configurações passadas. O 'file' indica qual o nome do atributo

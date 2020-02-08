@@ -20,6 +20,20 @@ class App {
 }
 ```
 
+- Por padrão, uma "String" de timestamp é escrita da seguinte forma:
+
+```json
+"date": "2020-02-08 18:13:07"
+```
+
+Para passar um fuso horário via String, é necessário escrever da seguinte forma:
+
+```json
+"date": "2020-02-08T18:13:07-03:00"
+```
+
+Onde, o `T` representa timezone, e o `-03:00` reflete qual fuso horário eu estou passando. Neste caso, `-03:00` é o fuso horário de São Paulo, brasilia.
+
 ---
 
 ## App
