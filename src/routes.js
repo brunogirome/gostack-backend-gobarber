@@ -4,6 +4,8 @@ import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import FileController from './app/controllers/FileController';
+import ProviderController from './app/controllers/ProviderController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -18,8 +20,14 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
-routes.post('/files', upload.single('file'), (req, res) => {
-  return res.json({ ok: true });
-});
+// routes.get('/providers', ProviderController.index);
+
+// Middleware upload.single('file'): middleware que salva o arquivo de acordo
+// com as configurações passadas. O 'file' indica qual o nome do atributo
+// do multipart-form que trás o arquivo que será feito o upload
+
+// Quando se faz upload de um único arquivo, o multer cria/libera uma variável
+// chamada req.file, se fossem vários, seria req.files
+routes.post('/files', upload.single('file'), FileController.store);
 
 export default routes;
