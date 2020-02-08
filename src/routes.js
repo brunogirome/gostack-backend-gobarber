@@ -20,7 +20,7 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
-// routes.get('/providers', ProviderController.index);
+routes.get('/providers', ProviderController.index);
 
 // Middleware upload.single('file'): middleware que salva o arquivo de acordo
 // com as configurações passadas. O 'file' indica qual o nome do atributo
