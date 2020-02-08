@@ -15,15 +15,15 @@ class AppointmentController {
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
       attributes: ['id', 'date'],
+      // Trazendo até 20 itens
+      limit: 20,
+      // Quantidade de itens que serão pulados
+      offset: (page - 1) * 20,
       include: [
         {
           model: User,
           as: 'provider',
           attributes: ['id', 'name'],
-          // Trazendo até 20 itens
-          limit: 20,
-          // Quantidade de itens que serão pulados
-          offset: (page - 1) * 20,
           include: [
             {
               model: File,
