@@ -24,6 +24,18 @@ class NotificationController {
 
     return res.json(notifications);
   }
+
+  async update(req, res) {
+    // A linha { new: true } indica que o mongoose irá trazer o objeto já
+    // atualizado
+    const notification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      { read: true },
+      { new: true }
+    );
+
+    return res.json(notification);
+  }
 }
 
 export default new NotificationController();

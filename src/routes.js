@@ -31,6 +31,7 @@ routes.get('/appointments', AppointmentController.index);
 routes.get('/schedules', ScheduleController.index);
 
 routes.get('/notifications', NotificationController.index);
+routes.put('/notifications/:id', NotificationController.update);
 
 // Middleware upload.single('file'): middleware que salva o arquivo de acordo
 // com as configurações passadas. O 'file' indica qual o nome do atributo
