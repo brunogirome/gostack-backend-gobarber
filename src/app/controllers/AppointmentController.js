@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 // Biblioteca de língua portuguesa do date-fns
 import pt_BR from 'date-fns/locale/pt-BR';
 
@@ -128,6 +128,42 @@ class AppointmentController {
       content: `Novo agendamento de ${user.name} para o ${formattedDate}`,
       user: provider_id,
     });
+
+    return res.json(appointment);
+  }
+
+  async delete(req, res) {
+    const appointment = await Appointment.findByPk(req.params.id);
+
+    if (appointment.user_id !== req.userId) {
+      // Mais uma vez, status 401 é??? Bad request! 👌
+      return res.status(401).json({
+        error: 'You do not have permission to cancel this appointmetn',
+      });
+    }
+
+    // Data com agendamento subtraído 2 horas
+    const dateWithSub = subHours(appointment.date, 2);
+
+    // Checando se a (data do agendamento - 2), passa da hora atual, ou seja:
+    // Se o agendamento for às 12:00, o dateWithSub será 10:00, se a hora atual
+    // for 09:00, 10:00 is before 09:00? Sim, então estamos 2 horas antes do
+    // horário do agendamento. Agora, se for 11:00, 10:00 is before 11:00? Não,
+    // não estamos 2 horas antes do agendamento
+    if (isBefore(dateWithSub, new Date())) {
+      return (
+        res
+          .status(401)
+          // Advance: antecedência
+          .json({ error: 'You can only cancel appoints 2 hours in advance' })
+      );
+    }
+
+    appointment.canceled_at = new Date();
+
+    // Como o appointment já é um objeto do mongoose, é apeneas executado um
+    // comando para salvar as alterações
+    await appointment.save();
 
     return res.json(appointment);
   }
