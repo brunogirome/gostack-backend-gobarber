@@ -40,6 +40,12 @@ Onde, o `T` representa timezone, e o `-03:00` reflete qual fuso horário eu esto
 yarn add date-fns@next
 ```
 
+- Para o template de email da aplicação, foi utilizado o [HandeBarsJs]<https://handlebarsjs.com/>.
+
+```bash
+yarn add express-handlebars nodemailer-express-handlebars
+```
+
 ---
 
 ## App
