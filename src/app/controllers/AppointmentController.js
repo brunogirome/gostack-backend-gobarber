@@ -8,6 +8,8 @@ import File from '../models/File';
 import Appointment from '../models/Appointment';
 import Notification from '../schemas/Notification';
 
+import Mail from '../../lib/Mail';
+
 class AppointmentController {
   async index(req, res) {
     // Descontruindo a query pegando o valor page, e caso esse valor não exista,
@@ -133,7 +135,10 @@ class AppointmentController {
   }
 
   async delete(req, res) {
-    const appointment = await Appointment.findByPk(req.params.id);
+    const appointment = await Appointment.findByPk(req.params.id, {
+      // Incluindo algumas informações do provider via include
+      include: [{ model: User, as: 'provider', attributes: ['name', 'email'] }],
+    });
 
     if (appointment.user_id !== req.userId) {
       // Mais uma vez, status 401 é??? Bad request! 👌
@@ -164,6 +169,16 @@ class AppointmentController {
     // Como o appointment já é um objeto do mongoose, é apeneas executado um
     // comando para salvar as alterações
     await appointment.save();
+
+    // Lembrando que o primeiro parâmetro do sendMail era message, e aqui nós
+    // estamos passando vários atributos para o objeto de configuração via o
+    // comando ...message
+    await Mail.sendMail({
+      to: `${appointment.provider.name} <${appointment.provider.email}>`,
+      subject: 'Agendamento cancelado',
+      // A tag text também pode ser uma tag 'html'
+      text: 'Você tem um novo cancelamento',
+    });
 
     return res.json(appointment);
   }
