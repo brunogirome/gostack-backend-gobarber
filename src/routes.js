@@ -8,6 +8,7 @@ import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
+import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -28,6 +29,8 @@ routes.post('/appointments', AppointmentController.store);
 routes.get('/appointments', AppointmentController.index);
 
 routes.get('/schedules', ScheduleController.index);
+
+routes.get('/notifications', NotificationController.index);
 
 // Middleware upload.single('file'): middleware que salva o arquivo de acordo
 // com as configurações passadas. O 'file' indica qual o nome do atributo

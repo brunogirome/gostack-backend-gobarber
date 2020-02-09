@@ -92,6 +92,14 @@ class AppointmentController {
         .json({ error: 'You can only create appointments with providers' });
     }
 
+    // Checando se o provider não é ele mesmo
+    if (provider_id === req.userId) {
+      // Lembrando de novo que 401 significa bad request! 😝
+      return res
+        .status(401)
+        .json({ error: 'You can not create a appointment for yourself' });
+    }
+
     // Criando agendamento
     const appointment = await Appointment.create({
       // Quando o usuário passa pelo middleware de authentication, lá dentro
