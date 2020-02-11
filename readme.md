@@ -192,3 +192,11 @@ await promisify(jwt.verify)(token, authConfig.secret);
 ## Validando dados de entrada com o `yup`
 
 Yup é uma lib de validação que utiliza um *Schema validation* para chegar o json que é enviado pela requisição.
+
+## Filas ou Background jobs
+
+- Banco de dados utilizado: Redis (Pela performace)
+
+- Bee queue: Ferramenta de filas pro node (Outra opção kue, quando se precisa de mais funções)
+
+- Separa algumas responsabilidades do node para outro processo, como no exemplo, o envio de emails

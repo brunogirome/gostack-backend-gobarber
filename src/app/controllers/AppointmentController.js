@@ -8,7 +8,8 @@ import File from '../models/File';
 import Appointment from '../models/Appointment';
 import Notification from '../schemas/Notification';
 
-import Mail from '../../lib/Mail';
+import Queue from '../../lib/Queue';
+import CancellationMail from '../jobs/CancellationMail';
 
 class AppointmentController {
   async index(req, res) {
@@ -173,23 +174,9 @@ class AppointmentController {
     // comando para salvar as alterações
     await appointment.save();
 
-    // Lembrando que o primeiro parâmetro do sendMail era message, e aqui nós
-    // estamos passando vários atributos para o objeto de configuração via o
-    // comando ...message
-    await Mail.sendMail({
-      to: `${appointment.provider.name} <${appointment.provider.email}>`,
-      subject: 'Agendamento cancelado',
-      // Nome do template hbs
-      template: 'cancellation',
-      // Variáveis que o template pede
-      context: {
-        provider: appointment.provider.name,
-        user: appointment.user.name,
-        date: format(appointment.date, "'dia' dd 'de' MMMM', às' H:mm'h'", {
-          locale: pt_BR,
-        }),
-      },
-    });
+    // Passando a chave e o objeto appointment, se não será passado apenas os
+    // atributos e não o objeto
+    await Queue.add(CancellationMail.key, { appointment });
 
     return res.json(appointment);
   }
