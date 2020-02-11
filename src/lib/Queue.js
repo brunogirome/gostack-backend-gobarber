@@ -43,8 +43,14 @@ class Queue {
       const { bee, handle } = this.queues[job.key];
       // Mandando o processo ser executado de dentro do objeto que armazena as
       // queues
-      bee.process(handle);
+
+      // Escutando um processo do bee queue
+      bee.on('failed', this.handleFailure).process(handle);
     });
+  }
+
+  handleFailure(job, err) {
+    console.log(`Queue ${job.queue.name}: FAILED`, err);
   }
 }
 
