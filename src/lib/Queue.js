@@ -45,10 +45,13 @@ class Queue {
       // queues
 
       // Escutando um processo do bee queue
+      // primeiro parâmetro é qual evento irá disparar a função do segundo
+      // parâmetro
       bee.on('failed', this.handleFailure).process(handle);
     });
   }
 
+  // Trabalhando com a
   handleFailure(job, err) {
     console.log(`Queue ${job.queue.name}: FAILED`, err);
   }
