@@ -17,7 +17,7 @@ class Queue {
     // Detalhe, geralmente o map é utilizado para retornar um valor, já o
     // forEach é utilizado apenas para percorrer o vetor
 
-    // O key e o hande foram desestruturados da classe, podendo ser acessados
+    // O key e o handle foram desestruturados da classe, podendo ser acessados
     // de forma mais rápida de dinâmica, sem a necessidade de realizar um
     // 'job.handle' ou 'job.key'
     jobs.forEach(({ key, handle }) => {
@@ -51,7 +51,7 @@ class Queue {
     });
   }
 
-  // Trabalhando com a
+  // Pegando os erros da fila
   handleFailure(job, err) {
     console.log(`Queue ${job.queue.name}: FAILED`, err);
   }
