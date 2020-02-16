@@ -4,7 +4,7 @@ import pt_BR from 'date-fns/locale/pt-BR';
 import Mail from '../../lib/Mail';
 
 class CancellationMail {
-  // Método get do ES6, onde apenas por declarar um método com gey, é possível
+  // Método get do ES6, onde apenas por declarar um método com get, é possível
   // acessálo com, por exemplo, CancellationMail.key
   get key() {
     // Chave única do job
