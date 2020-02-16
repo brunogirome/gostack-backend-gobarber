@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import Queue from './lib/Queue';
 
 // Tada, a fila é executada fora do mesmo processo que o node, para não

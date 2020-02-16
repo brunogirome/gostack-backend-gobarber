@@ -1,3 +1,6 @@
+// Jogando o arquivo .env em um processo do node chamado process.env
+import 'dotenv/config';
+
 import express from 'express';
 import path from 'path';
 import * as Sentry from '@sentry/node';
@@ -54,10 +57,14 @@ class App {
     // Quando um middleware possui 4 parâmentros no express, ele é
     // automaticamente reconhecido como um middleware de tratamento de excessões
     this.server.use(async (err, req, res, next) => {
-      // Lembrando que o Youch possui um método chamado toHTML
-      const errors = await new Youch(err, req).toJSON();
-      // Status 500: Internal server error
-      return res.status(500).json(errors);
+      if (process.env.NODE_ENV === 'development') {
+        // Lembrando que o Youch possui um método chamado toHTML
+        const errors = await new Youch(err, req).toJSON();
+        // Status 500: Internal server error
+        return res.status(500).json(errors);
+      }
+
+      return res.status(500).json({ error: 'Internal server error' });
     });
   }
 }
