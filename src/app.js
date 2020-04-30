@@ -1,6 +1,6 @@
 // Jogando o arquivo .env em um processo do node chamado process.env
 import 'dotenv/config';
-
+import cors from 'cors';
 import express from 'express';
 import path from 'path';
 import * as Sentry from '@sentry/node';
@@ -32,6 +32,7 @@ class App {
     // De acordo com a documentação do Sentry, o requestHandler deve vir antes
     // de todos as outras requisições
     this.server.use(Sentry.Handlers.requestHandler());
+    this.server.use(cors());
     this.server.use(express.json());
     // Primeiro, foi setada uma rota que "receberá" o middeware, e depois
     // foi adicionado de fato o middleware que será exectuado. Nesse caso,
